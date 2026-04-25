@@ -45,14 +45,21 @@ class MultiLayerDecoder(nn.Module):
             x = F.relu(x)
         return x
 
-class MultiLayerDecoder_idcat(MultiLayerDecoder):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+# class MultiLayerDecoder_idcat(MultiLayerDecoder):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
 
-class MultiLayerDecoder_notrans(MultiLayerDecoder):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+# class MultiLayerDecoder_notrans(MultiLayerDecoder):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
 
 class MultiLayerDecoder_trans(MultiLayerDecoder):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def forward(self, x):
+        if self.positional_encoding:
+            x = self.positional_encoding(x)
+
+        x = self.sa_decoder(x)
+        return x
